@@ -1,0 +1,23 @@
+body {
+    /*background: url("./assets/img/background.png") center !important;*/
+    /*background-size: cover !important;*/
+    height: 100%;
+    font-family: Myriad !important;
+}
+
+
+/*@media only screen and (max-width: 600px) {*/
+/*    .MuiToolbar-root {*/
+/*        flex-wrap: wrap;*/
+/*        justify-content: center;*/
+/*    }*/
+
+/*    .MuiToolbar-gutters {*/
+/*        padding-left: 0 !important;*/
+/*    }*/
+/*}*/
+
+@font-face {
+    font-family: 'Myriad';
+    src: local('Myriad'), url(./assets/fonts/MYRIADPRO-BOLD.OTF) format('opentype');
+}
