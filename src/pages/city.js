@@ -6,7 +6,7 @@ import {getCity} from "../api"
 import {Context} from '../app';
 
 const City = () => {
-  const {state} = useContext(Context)
+  const {state, dispatch} = useContext(Context)
   const classes = materialStyle()
   const [occupy, setOccupy] = useState(0)
   const [load, setLoad] = useState(0)
@@ -14,6 +14,7 @@ const City = () => {
   const [isLoading, setIsLoading] = useState(false)
 
   useEffect(() => {
+    dispatch({type: "change_page", data: 3})
     getData()
     const intervalFunc = setInterval(() => getData(), 3000)
 

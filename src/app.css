@@ -5,17 +5,10 @@ body {
     font-family: Myriad !important;
 }
 
-
-/*@media only screen and (max-width: 600px) {*/
-/*    .MuiToolbar-root {*/
-/*        flex-wrap: wrap;*/
-/*        justify-content: center;*/
-/*    }*/
-
-/*    .MuiToolbar-gutters {*/
-/*        padding-left: 0 !important;*/
-/*    }*/
-/*}*/
+table, th, td {
+    border: 2px solid white;
+    border-collapse: collapse;
+}
 
 @font-face {
     font-family: 'Myriad';

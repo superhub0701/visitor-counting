@@ -1,5 +1,5 @@
 import React, {useContext} from "react"
-import {Link, useHistory} from "react-router-dom"
+import {useHistory} from "react-router-dom"
 import { styled } from '@material-ui/core/styles'
 import {Context} from '../app';
 
@@ -21,11 +21,10 @@ const fields = [
 ]
 
 const Menu = () => {
-  const {state, dispatch} = useContext(Context)
+  const {state} = useContext(Context)
   const history = useHistory()
 
   const onClick = (i) => {
-    dispatch({type: "change_page", data: i});
     history.push(`/main/${fields[i].to}`)
   }
 

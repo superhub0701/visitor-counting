@@ -13,7 +13,7 @@ const Main = () => {
     <div className={"container"}>
       <div className={"row"}>
         <div className={"col-12"}>
-          <h1>Visitors Counting System</h1>
+          <div style={{fontSize: 60}}>Visitors Counting System</div>
         </div>
         <div className={"col-12"}>
           <Menu/>
