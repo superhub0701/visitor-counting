@@ -1,33 +1,93 @@
-import React from "react"
-import {Link} from "react-router-dom"
+import React, {useState} from "react"
+import {Link, useHistory} from "react-router-dom"
+import {makeStyles} from "@material-ui/core/styles";
+import Button from '@material-ui/core/Button';
+import CircularProgress from "@material-ui/core/CircularProgress";
+import materialStyle from "../../styles/material"
+import {login} from "../../api"
+import err_func from "../../auth-check";
+
+const useStyles = makeStyles(theme => ({
+  leftSide: {
+    width: '25%', display: 'flex', justifyContent: 'flex-end', paddingRight: 16
+  },
+  input: {
+    flexGrow: 1, height: 36, backgroundColor: '#1e4f8a', outline: "none"
+  },
+  button: {
+    backgroundColor: '#518ee1', width: 150, color: 'white', fontFamily: 'Myriad', fontSize: 16
+  }
+}))
 
 const Login = () => {
+  const classes = useStyles()
+  const classes1 = materialStyle()
+  const history = useHistory()
+  const [userId, setUserId] = useState('')
+  const [password, setPassword] = useState('')
+  const [isRememberMe, setIsRememberMe] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
+
+  const onSubmit = () => {
+    setIsLoading(true)
+
+    let myDataObj = {userId, password, isRememberMe}
+    let formData = new FormData();
+
+    for (let key in myDataObj) {
+      formData.append(key, myDataObj[key])
+    }
+
+    login(formData)
+      .then(res=> {
+        setIsLoading(false)
+        console.log('result', res.data)
+        // localStorage.setItem('visitor_counting_app_user', res.data)
+        history.push('/main')
+      }).catch(err=>{
+        setIsLoading(false)
+        alert('Error found')
+    })
+  }
+
   return (
-    <div className={"justify-content-center align-items-center"}>
-      <h1>Visitors Counting System</h1>
-      <div className={"p-4"} style={{backgroundColor: "#2b5494"}}>
-        <h2>Login</h2>
-        <div className={"d-flex"}>
-          <div className={'w-25'}>UserId: </div>
-          <input className={'flex-grow-1'} type={'text'} />
-        </div>
-        <div className={"d-flex"}>
-          <div className={'w-25'}>Password</div>
-          <input className={'flex-grow-1'} type={'text'} />
-        </div>
-        <div className={"d-flex"}>
-          <div className={'w-25'}></div>
-          <div className={"d-flex flex-grow-1 justify-content-between"}>
-            <label><input type={'checkbox'} className={"mr-1"} />Remember Me</label>
-            <Link className={'flex-grow-1'} to={'/auth/forgotPassword'}>Forgot Password?</Link>
+    <>
+      <div className={"justify-content-center align-items-center user-select-none"}>
+        <div style={{fontSize: 60}}>Visitors Counting System</div>
+        <div className={'d-flex justify-content-center'}>
+          <div className={"p-4 login"}>
+            <h1 className={'mb-3'}>Login</h1>
+            <div className={"d-flex mb-3"}>
+              <div className={classes.leftSide}>UserId:</div>
+              <input className={classes.input} type={'text'} value={userId}
+                     onChange={(e) => setUserId(e.target.value)} />
+            </div>
+            <div className={"d-flex mb-2"}>
+              <div className={classes.leftSide}>Password</div>
+              <input type={'password'} className={classes.input} value={password} minLength={8}
+                     onChange={(e) => setPassword(e.target.value)} placeholder={'minimum 8 characters'} />
+            </div>
+            <div className={"d-flex mb-1"}>
+              <div className={classes.leftSide}></div>
+              <div className={"d-flex flex-grow-1 justify-content-between"}>
+                <label onClick={() => setIsRememberMe(!isRememberMe)}><input type={'checkbox'} value={isRememberMe} className={"mr-1"}/>Remember Me</label>
+                <Link className={'flex-grow-1 d-flex justify-content-end text-light'} to={'/auth/forgotPassword'}>Forgot Password?</Link>
+              </div>
+            </div>
+            <div className={"d-flex"}>
+              <div className={classes.leftSide}></div>
+              <Button variant="contained" className={classes.button} onClick={onSubmit} disabled={!(userId && password && password.length > 7)}>
+                LOGIN
+              </Button>
+            </div>
           </div>
         </div>
-        <div className={"d-flex"}>
-          <div className={'w-25'}></div>
-          <button className={'flex-grow-1'}>LOGIN</button>
-        </div>
       </div>
-    </div>
+
+      {isLoading ? <div className={classes1.loading}>
+        <CircularProgress size={100} color="secondary"/>
+      </div> : null}
+    </>
   )
 }
 

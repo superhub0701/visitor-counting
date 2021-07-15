@@ -10,6 +10,11 @@ table, th, td {
     border-collapse: collapse;
 }
 
+.login {
+    background-color: #2b5494;
+    width: 400px;
+}
+
 @font-face {
     font-family: 'Myriad';
     src: local('Myriad'), url(./assets/fonts/MYRIADPRO-BOLD.OTF) format('opentype');

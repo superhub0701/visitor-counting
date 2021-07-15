@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
 const App = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const classes = useStyles()
-  // let User = JSON.parse(localStorage.getItem('user'));
+  let User = JSON.parse(localStorage.getItem('visitor_counting_app_user'));
 
   return (
     <div className="position-relative text-white">
@@ -37,10 +37,10 @@ const App = () => {
           <Router>
             <Switch>
               <Route path={`/main`}>
-                {/*{User && User.id ?*/}
-                <Main/>
-                {/*: <Redirect to="/auth" />*/}
-                {/*}*/}
+                {User && User.id ?
+                  <Main/> :
+                  <Redirect to="/auth"/>
+                }
               </Route>
 
               <Route path={`/auth`}>
