@@ -2,6 +2,7 @@ import React from "react";
 import {Switch, Route, Redirect} from "react-router";
 import Login from "./login";
 import ForgotPassword from "./forgotPassword";
+import ResetPassword from "./resetPassword";
 
 const Auth = () => {
 
@@ -11,6 +12,7 @@ const Auth = () => {
         <Switch>
           <Route path={`/auth/login`}><Login/></Route>
           <Route path={`/auth/forgotPassword`}><ForgotPassword/></Route>
+          {/*<Route path={`/auth/resetPassword/:id`}><ResetPassword/></Route>*/}
           <Route path="/auth">
             <Redirect to="/auth/login"/>
           </Route>

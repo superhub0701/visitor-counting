@@ -2,9 +2,7 @@ import axios from 'axios';
 // import authHeader from "./auth-header";
 export const baseUrl = 'http://localhost';
 
-export const login = (data) => axios.post(`${baseUrl}/visitor-api.php`, data)
-
-export const forgotpassword = (data) => axios.post(`${baseUrl}/forgotpassword`, data)
+export const auth = (data) => axios.post(`${baseUrl}/visitor-api.php`, data)
 
 // export const getGalleria = () => axios.get(`${baseUrl}/visitor-api?type=galleria`, {headers:authHeader()})
 export const getGalleria = () => axios.get(`${baseUrl}/visitor.php?type=galleria`)
