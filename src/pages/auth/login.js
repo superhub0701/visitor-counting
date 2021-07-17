@@ -86,8 +86,8 @@ const Login = () => {
                                                                              value={isRememberMe}
                                                                              className={"mr-1"}/>Remember
                   Me</label>
-                <Link className={'flex-grow-1 d-flex justify-content-end text-light'}
-                      to={'/auth/forgotPassword'}>Forgot Password?</Link>
+                {/*<Link className={'flex-grow-1 d-flex justify-content-end text-light'}*/}
+                {/*      to={'/auth/forgotPassword'}>Forgot Password?</Link>*/}
               </div>
             </div>
             {isFailed? <div className={'mb-1 text-center'} style={{color: 'purple'}}>Email or password is not valid.</div> : null}
