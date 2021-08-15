@@ -1,7 +1,7 @@
 import axios from 'axios';
 // import authHeader from "./auth-header";
-export const baseUrl = 'http://localhost';
-// export const baseUrl = 'https://8839ac298d1a.ngrok.io';
+// export const baseUrl = 'http://localhost';
+export const baseUrl = 'http://94.56.53.26';
 
 export const auth = (data) => axios.post(`${baseUrl}/visitor-api.php`, data)
 
