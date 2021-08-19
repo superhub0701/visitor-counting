@@ -11,7 +11,7 @@ const City = () => {
   const [occupy, setOccupy] = useState(0)
   const [load, setLoad] = useState(0)
   const [vacancy, setVacancy] = useState(0)
-  const [isLoading, setIsLoading] = useState(false)
+  // const [isLoading, setIsLoading] = useState(false)
 
   useEffect(() => {
     dispatch({type: "change_page", data: 3})
@@ -24,15 +24,15 @@ const City = () => {
   }, [])
 
   const getData = () => {
-    setIsLoading(true)
+    // setIsLoading(true)
     getCity()
       .then(res => {
-        setIsLoading(false)
+        // setIsLoading(false)
         setOccupy(res.data)
         setLoad(75)
         setVacancy(75 - res.data)
       }).catch(err => {
-      setIsLoading(false)
+      // setIsLoading(false)
       console.log('error: ', err.response)
       alert('Error found')
     })
@@ -41,9 +41,9 @@ const City = () => {
   return (
     <>
       <TableContent occupy={occupy} load={load} vacancy={vacancy} color={state.colors[3]}/>
-      {isLoading ? <div className={classes.loading}>
-        <CircularProgress size={100} color="secondary"/>
-      </div> : null}
+      {/*{isLoading ? <div className={classes.loading}>*/}
+      {/*  <CircularProgress size={100} color="secondary"/>*/}
+      {/*</div> : null}*/}
     </>
   )
 };

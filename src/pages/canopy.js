@@ -11,7 +11,7 @@ const Canopy = () => {
   const [occupy, setOccupy] = useState(0)
   const [load, setLoad] = useState(0)
   const [vacancy, setVacancy] = useState(0)
-  const [isLoading, setIsLoading] = useState(false)
+  // const [isLoading, setIsLoading] = useState(false)
 
   useEffect(() => {
     dispatch({type: "change_page", data: 2})
@@ -24,15 +24,15 @@ const Canopy = () => {
   }, [])
 
   const getData = () => {
-    setIsLoading(true)
+    // setIsLoading(true)
     getCanopy()
       .then(res => {
-        setIsLoading(false)
+        // setIsLoading(false)
         setOccupy(res.data)
         setLoad(229)
         setVacancy(229 - res.data)
       }).catch(err => {
-      setIsLoading(false)
+      // setIsLoading(false)
       console.log('error: ', err.response)
       alert('Error found')
     })
@@ -41,9 +41,9 @@ const Canopy = () => {
   return (
     <>
       <TableContent occupy={occupy} load={load} vacancy={vacancy} color={state.colors[2]}/>
-      {isLoading ? <div className={classes.loading}>
-        <CircularProgress size={100} color="secondary"/>
-      </div> : null}
+      {/*{isLoading ? <div className={classes.loading}>*/}
+      {/*  <CircularProgress size={100} color="secondary"/>*/}
+      {/*</div> : null}*/}
     </>
   )
 };
