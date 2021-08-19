@@ -28,10 +28,9 @@ const Market = () => {
     getMarket()
       .then(res => {
         setIsLoading(false)
-        let {occupy, vacancy} = res.data
-        setOccupy(occupy)
-        setLoad(occupy + vacancy)
-        setVacancy(vacancy)
+        setOccupy(res.data)
+        setLoad(269)
+        setVacancy(269 - res.data)
       }).catch(err => {
       setIsLoading(false)
       console.log('error: ', err.response)

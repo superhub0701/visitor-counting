@@ -8,16 +8,47 @@ import Galleria from "./galleria";
 import Canopy from "./canopy";
 import City from "./city";
 import Market from "./market";
-import Logout from "../assets/img/logout.png"
+import {logoutIcon} from "../components/image"
 
 const useStyles = makeStyles(theme=> ({
-  logoutContainer: {position: 'absolute', top: 10, right: 0, zIndex: 1},
-  logoutContent: {
-    position: 'absolute', right: 25, top: 12, width: 100, textAlign: 'center', wordBreak: 'break-all', display: 'flex', flexDirection: 'column', cursor: 'pointer'
+  container: {
+    [theme.breakpoints.down(768)]: {
+      maxWidth: '100%',
+    }
   },
-  logout: {fontSize: 22},
+  logoutContainer: {position: 'absolute', top: 10, right: 0, zIndex: 1},
+  img: {
+    width: 200,
+    [theme.breakpoints.down(768)]: {
+      width: 160,
+    }
+  },
+  logoutContent: {
+    position: 'absolute', right: 25, top: 12, width: 100, textAlign: 'center', wordBreak: 'break-all', display: 'flex', flexDirection: 'column', cursor: 'pointer',
+    [theme.breakpoints.down(768)]: {
+      top: 10, right: 10
+    }
+  },
+  logout: {
+    fontSize: 22,
+    [theme.breakpoints.down(768)]: {
+      fontSize: 18
+    }
+  },
   username: {marginTop: -8},
-  title: {fontSize: 60}
+  title: {
+    display: 'flex', alignItems: 'center',
+    height: 100, fontSize: 60,
+    [theme.breakpoints.between(768, 992)]: {
+      height: 80, fontSize: 40
+    },
+    [theme.breakpoints.between(550, 768)]: {
+      height: 80, fontSize: 32
+    },
+    [theme.breakpoints.down(550)]: {
+      width: 'calc(100% - 140px)', height: 100, fontSize: 24
+    },
+  }
 }))
 
 const Main = () => {
@@ -26,9 +57,9 @@ const Main = () => {
   const history = useHistory()
 
   return (
-    <div className={"container position-relative"}>
+    <div className={`container position-relative ${classes.container}`}>
       <div className={classes.logoutContainer}>
-        <img src={Logout} alt={'logout img'} width={200} />
+        <img className={classes.img} src={logoutIcon} alt={'logout img'} />
         <div className={classes.logoutContent} onClick={() => {
           localStorage.removeItem('visitor_counting_app_user')
           history.push('/auth/login')

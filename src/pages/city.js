@@ -28,10 +28,9 @@ const City = () => {
     getCity()
       .then(res => {
         setIsLoading(false)
-        let {occupy, vacancy} = res.data
-        setOccupy(occupy)
-        setLoad(occupy + vacancy)
-        setVacancy(vacancy)
+        setOccupy(res.data)
+        setLoad(75)
+        setVacancy(75 - res.data)
       }).catch(err => {
       setIsLoading(false)
       console.log('error: ', err.response)

@@ -29,10 +29,9 @@ const Galleria = () => {
     getGalleria()
       .then(res => {
         setIsLoading(false)
-        let {occupy, vacancy} = res.data
-        setOccupy(occupy)
-        setLoad(occupy + vacancy)
-        setVacancy(vacancy)
+        setOccupy(res.data)
+        setLoad(315)
+        setVacancy(315 - res.data)
       }).catch(err => {
       setIsLoading(false)
       console.log('error: ', err.response)

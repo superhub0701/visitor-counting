@@ -28,10 +28,9 @@ const Canopy = () => {
     getCanopy()
       .then(res => {
         setIsLoading(false)
-        let {occupy, vacancy} = res.data
-        setOccupy(occupy)
-        setLoad(occupy + vacancy)
-        setVacancy(vacancy)
+        setOccupy(res.data)
+        setLoad(229)
+        setVacancy(229 - res.data)
       }).catch(err => {
       setIsLoading(false)
       console.log('error: ', err.response)

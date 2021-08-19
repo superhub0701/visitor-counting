@@ -5,7 +5,7 @@ import "./app.css";
 import Auth from "./pages/auth";
 import Main from "./pages";
 import {reducer, initialState} from './store';
-import background from "./assets/img/background.png";
+import {backgroundIcon} from './components/image'
 
 export const Context = createContext();
 
@@ -32,7 +32,7 @@ const App = () => {
 
   return (
     <div className="position-relative text-white">
-      <img className={classes.background} src={background} alt="bg img"/>
+      <img className={classes.background} src={backgroundIcon} alt="bg img"/>
       <div className={classes.content}>
         <Context.Provider value={{state, dispatch}}>
           <Router>

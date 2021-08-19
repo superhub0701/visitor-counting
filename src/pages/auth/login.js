@@ -9,6 +9,12 @@ import err_func from "../../auth-check";
 import {Context} from '../../app';
 
 const useStyles = makeStyles(theme => ({
+  title: {
+    fontSize: 60, textAlign: 'center', lineHeight: '60px', marginBottom: 32,
+    [theme.breakpoints.down(576)]: {
+      fontSize: 42, lineHeight: '40px', marginBottom: 16
+    }
+  },
   leftSide: {
     width: '25%', display: 'flex', justifyContent: 'flex-end', paddingRight: 16
   },
@@ -65,7 +71,7 @@ const Login = () => {
   return (
     <>
       <div className={"justify-content-center align-items-center user-select-none"}>
-        <div style={{fontSize: 60, textAlign: 'center'}}>Visitors Counting System</div>
+        <div className={classes.title}>Visitors Counting System</div>
         <div className={'d-flex justify-content-center'}>
           <div className={"p-4 login"}>
             <h1 className={'mb-3'}>Login</h1>

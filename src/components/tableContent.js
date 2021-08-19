@@ -1,5 +1,7 @@
 import React from "react"
 import {makeStyles} from '@material-ui/core/styles';
+import useMediaQuery from "@material-ui/core/useMediaQuery";
+import {font1, font2, font3, font4, font5} from "../global";
 
 const useStyles = makeStyles(theme => ({
   container: props => ({
@@ -17,40 +19,57 @@ const useStyles = makeStyles(theme => ({
     height: 40, backgroundColor: '#4c434c'
   },
   style2: {
-    fontSize: 32,
+    fontSize: font2,
     width: '50%',
-    textAlign: 'center'
+    textAlign: 'center',
+    [theme.breakpoints.down(768)]: {width: '100%'}
   },
   style3: {
     borderTop: '2px solid white',
     borderBottom: '2px solid white',
-    fontSize: 32,
+    fontSize: font2,
     backgroundColor: '#4c434c',
     textAlign: 'center'
+  },
+  mobileValue: {
+    fontSize: font3, textAlign: 'center'
   }
 }))
 
 const TableContent = ({occupy, load, vacancy, color}) => {
   const classes = useStyles({bgClr: color})
+  const matches = useMediaQuery('(max-width: 767.98px)');
 
   return (
     <div className={classes.container}>
       <table className={classes.table}>
         <tbody>
-        <tr className={classes.style1}>
-          <td className={classes.style2}>OCCUPANCIES</td>
-          <td className={classes.style2}>VACANCIES</td>
-        </tr>
-        <tr>
-          <td style={{fontSize: 60, textAlign: 'center'}}>{occupy}</td>
-          <td className={"d-flex flex-column h-100 border-0 p-0"}>
-            <div className={"d-flex justify-content-center align-items-center"}
-                 style={{height: 'calc(50% - 25px)', fontSize: 60}}>{vacancy}</div>
-            <div className={classes.style3}>Load</div>
-            <div className={"d-flex justify-content-center align-items-center flex-grow-1"}
-                 style={{fontSize: 60}}>{load}</div>
-          </td>
-        </tr>
+        {matches ?
+          <>
+            <tr className={classes.style1}><td className={classes.style2}>OCCUPANCIES</td></tr>
+            <tr><td className={classes.mobileValue}>{occupy}</td></tr>
+            <tr className={classes.style1}><td className={classes.style2}>VACANCIES</td></tr>
+            <tr><td className={classes.mobileValue}>{vacancy}</td></tr>
+            <tr className={classes.style1}><td className={classes.style2}>Load</td></tr>
+            <tr><td className={classes.mobileValue}>{load}</td></tr>
+          </> :
+          <>
+            <tr className={classes.style1}>
+              <td className={classes.style2}>OCCUPANCIES</td>
+              <td className={classes.style2}>VACANCIES</td>
+            </tr>
+            <tr>
+              <td style={{fontSize: font5, textAlign: 'center'}}>{occupy}</td>
+              <td className={"d-flex flex-column h-100 border-0 p-0"}>
+                <div className={"d-flex justify-content-center align-items-center"}
+                     style={{height: 'calc(50% - 25px)', fontSize: font4}}>{vacancy}</div>
+                <div className={classes.style3}>Load</div>
+                <div className={"d-flex justify-content-center align-items-center flex-grow-1"}
+                     style={{fontSize: font4}}>{load}</div>
+              </td>
+            </tr>
+          </>
+          }
         </tbody>
       </table>
     </div>
