@@ -1,14 +1,15 @@
 import React, {useEffect, useState, useContext} from "react";
 // import {makeStyles} from '@material-ui/core/styles';
-import CircularProgress from '@material-ui/core/CircularProgress';
+// import CircularProgress from '@material-ui/core/CircularProgress';
 import TableContent from "../components/tableContent"
-import materialStyle from "../styles/material"
+// import materialStyle from "../styles/material"
 import {getGalleria} from "../api"
 import {Context} from '../app';
+import {GalleriaLoad} from "../global";
 
 const Galleria = () => {
   const {state, dispatch} = useContext(Context)
-  const classes = materialStyle()
+  // const classes = materialStyle()
   const [occupy, setOccupy] = useState(0)
   const [load, setLoad] = useState(0)
   const [vacancy, setVacancy] = useState(0)
@@ -30,8 +31,8 @@ const Galleria = () => {
       .then(res => {
         // setIsLoading(false)
         setOccupy(res.data)
-        setLoad(315)
-        setVacancy(315 - res.data)
+        setLoad(GalleriaLoad)
+        setVacancy(GalleriaLoad - res.data)
       }).catch(err => {
       // setIsLoading(false)
       console.log('error: ', err.response)
@@ -41,7 +42,7 @@ const Galleria = () => {
 
   return (
     <>
-      <TableContent occupy={occupy} load={load} vacancy={vacancy} color={state.colors[1]}/>
+      <TableContent occupy={occupy} load={load} vacancy={vacancy} color={state.colors[1]} isWarning={occupy>86}/>
       {/*{isLoading ? <div className={classes.loading}>*/}
       {/*  <CircularProgress size={100} color="secondary"/>*/}
       {/*</div> : null}*/}

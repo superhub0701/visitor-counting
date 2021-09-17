@@ -11,3 +11,4 @@ export const getDashboard = () => axios.get(`${baseUrl}/visitor.php?type=dashboa
 export const getCanopy = () => axios.get(`${baseUrl}/visitor.php?type=canopy`);
 export const getCity = () => axios.get(`${baseUrl}/visitor.php?type=city`);
 export const getMarket = () => axios.get(`${baseUrl}/visitor.php?type=market`);
+export const getQueue = () => axios.get(`${baseUrl}/visitor.php?type=queue`);

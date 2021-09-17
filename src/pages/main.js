@@ -1,11 +1,11 @@
 import React, {useContext, useEffect, useState} from "react";
 import {makeStyles} from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
-import CircularProgress from "@material-ui/core/CircularProgress";
-import materialStyle from "../styles/material";
+// import CircularProgress from "@material-ui/core/CircularProgress";
+// import materialStyle from "../styles/material";
 import {Context} from "../app";
 import {getDashboard} from "../api";
-import {font1, font2, font3, font4, font5} from "../global";
+import {font1, font2, font3, font4, font5, CityLoad, CanopyLoad, MarketLoad, QueueLoad, TotalLoad, GalleriaLoad} from "../global";
 
 const useStyles = makeStyles(theme => ({
   container: props => ({
@@ -13,7 +13,8 @@ const useStyles = makeStyles(theme => ({
     flexDirection: 'column',
     backgroundColor: props.bgClr,
     height: 'calc(100vh - 200px)',
-    padding: 8,
+    // padding: 8,
+    textShadow: '2px 3px 5px black',
     [theme.breakpoints.down(768)]: {
       overflow: 'scroll'
     }
@@ -72,7 +73,7 @@ const useStyles = makeStyles(theme => ({
 const Dashboard = () => {
   const {state, dispatch} = useContext(Context)
   const classes = useStyles({bgClr: state.colors[0]})
-  const classes1 = materialStyle()
+  // const classes1 = materialStyle()
   const matches = useMediaQuery('(max-width: 767.98px)');
   const [details, setDetails] = useState([])
   const [occupy, setOccupy] = useState(0)
@@ -95,16 +96,17 @@ const Dashboard = () => {
     getDashboard()
       .then(res => {
         // setIsLoading(false)
-        let {canopy, city, market, total} = res.data
-        setLoad(888)
+        let {galleria, canopy, city, queue, market} = res.data
+        setLoad(TotalLoad)
+        let total = galleria + canopy + city + queue + market;
         setOccupy(total)
-        let galleria = total - canopy - city - market;
-        setVacancy(888-total)
+        setVacancy(TotalLoad-total)
         setDetails([
-          {occupy: galleria, vacancy: 315-galleria},
-          {occupy: canopy, vacancy: 229-canopy},
-          {occupy: city, vacancy: 75-city},
-          {occupy: market, vacancy: 269-market},
+          {occupy: galleria, load: GalleriaLoad},
+          {occupy: canopy, load: CanopyLoad},
+          {occupy: city, load: CityLoad},
+          {occupy: queue, load: QueueLoad},
+          {occupy: market, load: MarketLoad},
         ])
       }).catch(err => {
       // setIsLoading(false)
@@ -114,10 +116,11 @@ const Dashboard = () => {
   }
 
   const detailStyles = [
-    {title: '#237350', top: '#00a15b', bottom: '#388866', name: 'GALLERIA'},
-    {title: '#96292c', top: '#e60b12', bottom: '#ab3e41', name: 'CANOPY WALK'},
-    {title: '#90563c', top: '#da6631', bottom: '#a56b51', name: 'CITY CONE'},
-    {title: '#6a2956', top: '#8f0b66', bottom: '#7f3e6b', name: 'SKY MARKET'},
+    {title: '#237350', top: '#707070', bottom: '#00a651', name: 'GALLERIA'},
+    {title: '#96292c', top: '#707070', bottom: '#ed145b', name: 'CANOPY WALK'},
+    {title: '#90563c', top: '#707070', bottom: '#f26522', name: 'CITY CONE'},
+    {title: '#90563c', top: '#707070', bottom: '#ddbd0b', name: 'QUEUE'},
+      {title: '#6a2956', top: '#707070', bottom: '#92278f', name: 'SKY MARKET'},
   ]
 
   return (
@@ -132,12 +135,12 @@ const Dashboard = () => {
           <div className={classes.mobileValue}>{load}</div>
           {detailStyles.map((data, i) => (
             <div className={'d-flex flex-column mt-3'} style={{height: 200}} key={i}>
-              <div className={classes.text} style={{backgroundColor: data.title}}>{data.name}</div>
+              <div className={classes.text} style={{backgroundColor: '#464646'}}>{data.name}</div>
               <div className={classes.detail}
                    style={{backgroundImage: `linear-gradient(to top left, ${data.top} 50%, ${data.bottom} 50%)`}}
               >
                 <span className={classes.up}>{details[i]?.occupy}</span>
-                <span className={classes.down}>{details[i]?.vacancy}</span>
+                <span className={classes.down}>{details[i]?.load}</span>
               </div>
             </div>
           ))}
@@ -171,17 +174,26 @@ const Dashboard = () => {
             </div>
           </div>
           <div className={'d-flex flex-grow-1'}>
-            {detailStyles.map((data, i) => (
-              <div className={'w-25 d-flex flex-column'} key={i}>
-                <div className={classes.text} style={{backgroundColor: data.title}}>{data.name}</div>
-                <div className={classes.detail}
-                     style={{backgroundImage: `linear-gradient(to top left, ${data.top} 50%, ${data.bottom} 50%)`}}
-                >
-                  <span className={classes.up}>{details[i]?.vacancy}</span>
-                  <span className={classes.down}>{details[i]?.occupy}</span>
+            {detailStyles.map((data, i) => {
+              let isWarning = false;
+              if(data.name === 'GALLERIA' && details[i]?.occupy > 86) isWarning = true;
+              else if(data.name === 'CANOPY WALK' && details[i]?.occupy > 60) isWarning = true;
+              else if(data.name === 'CITY CONE' && details[i]?.occupy > 30) isWarning = true;
+              else if(data.name === 'QUEUE' && details[i]?.occupy > 50) isWarning = true;
+              else if(data.name === 'SKY MARKET' && details[i]?.occupy > 120) isWarning = true;
+
+              return (
+                <div className={'d-flex flex-column'} style={{width: `${100 / detailStyles.length}%`}} key={i}>
+                  <div className={classes.text} style={{backgroundColor: '#464646'}}>{data.name}</div>
+                  <div className={classes.detail}
+                       style={{backgroundImage: `linear-gradient(to top left, ${data.top} 50%, ${data.bottom} 50%)`}}
+                  >
+                    <span className={classes.up} style={{color: isWarning? 'red' : 'white'}}>{details[i]?.occupy}</span>
+                    <span className={classes.down}>{details[i]?.load}</span>
+                  </div>
                 </div>
-              </div>
-            ))}
+              )
+            })}
           </div>
         </>
       }

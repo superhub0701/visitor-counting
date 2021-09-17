@@ -1,11 +1,11 @@
 const initialState = {
-  pageBgClr: [true, false, false, false, false],
-  colors: ['#0072bc', '#0d9a56', '#e3165f', '#e75f2c', '#862683'],
+  pageBgClr: [true, false, false, false, false, false],
+  colors: ['#0072bc', '#0d9a56', '#e3165f', '#e75f2c', '#ddbd0b', '#862683'],
   user: {}
 }
 
 const onChangeBgClr = (i) => {
-  let clr = [false, false, false, false, false];
+  let clr = [false, false, false, false, false, false];
   clr[i] = true;
   return clr
 }

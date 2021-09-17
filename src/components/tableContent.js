@@ -32,11 +32,11 @@ const useStyles = makeStyles(theme => ({
     textAlign: 'center'
   },
   mobileValue: {
-    fontSize: font3, textAlign: 'center'
+    fontSize: font3, textAlign: 'center', textShadow: '2px 3px 5px black'
   }
 }))
 
-const TableContent = ({occupy, load, vacancy, color}) => {
+const TableContent = ({occupy, load, vacancy, color, isWarning}) => {
   const classes = useStyles({bgClr: color})
   const matches = useMediaQuery('(max-width: 767.98px)');
 
@@ -47,7 +47,7 @@ const TableContent = ({occupy, load, vacancy, color}) => {
         {matches ?
           <>
             <tr className={classes.style1}><td className={classes.style2}>OCCUPANCIES</td></tr>
-            <tr><td className={classes.mobileValue}>{occupy}</td></tr>
+            <tr><td className={classes.mobileValue} style={{color: isWarning? 'red' : 'white'}}>{occupy}</td></tr>
             <tr className={classes.style1}><td className={classes.style2}>VACANCIES</td></tr>
             <tr><td className={classes.mobileValue}>{vacancy}</td></tr>
             <tr className={classes.style1}><td className={classes.style2}>Load</td></tr>
@@ -59,13 +59,13 @@ const TableContent = ({occupy, load, vacancy, color}) => {
               <td className={classes.style2}>VACANCIES</td>
             </tr>
             <tr>
-              <td style={{fontSize: font5, textAlign: 'center'}}>{occupy}</td>
+              <td style={{fontSize: font5, textAlign: 'center', textShadow: '2px 3px 5px black', color: isWarning? 'red' : 'white'}}>{occupy}</td>
               <td className={"d-flex flex-column h-100 border-0 p-0"}>
                 <div className={"d-flex justify-content-center align-items-center"}
-                     style={{height: 'calc(50% - 25px)', fontSize: font4}}>{vacancy}</div>
+                     style={{height: 'calc(50% - 25px)', fontSize: font4, textShadow: '2px 3px 5px black'}}>{vacancy}</div>
                 <div className={classes.style3}>Load</div>
                 <div className={"d-flex justify-content-center align-items-center flex-grow-1"}
-                     style={{fontSize: font4}}>{load}</div>
+                     style={{fontSize: font4, textShadow: '2px 3px 5px black'}}>{load}</div>
               </td>
             </tr>
           </>
