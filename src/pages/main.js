@@ -49,14 +49,16 @@ const useStyles = makeStyles(theme => ({
   up: {
     position: 'absolute',
     top: '10%',
-    right: '45%',
-    [theme.breakpoints.down(768)]: {right: '55%'}
+    right: '55%',
+    [theme.breakpoints.between(768, 992)]: {right: '45%'},
+    [theme.breakpoints.down(768)]: {right: '65%'}
   },
   down: {
     position: 'absolute',
     bottom: '10%',
-    left: '45%',
-    [theme.breakpoints.down(768)]: {left: '55%'}
+    left: '55%',
+    [theme.breakpoints.between(768, 992)]: {left: '45%'},
+    [theme.breakpoints.down(768)]: {left: '65%'}
   },
   text: {
     height: 50, fontSize: 28,

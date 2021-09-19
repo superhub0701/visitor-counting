@@ -50,7 +50,7 @@ const TableContent = ({occupy, load, vacancy, color, isWarning}) => {
             <tr><td className={classes.mobileValue} style={{color: isWarning? 'red' : 'white'}}>{occupy}</td></tr>
             <tr className={classes.style1}><td className={classes.style2}>VACANCIES</td></tr>
             <tr><td className={classes.mobileValue}>{vacancy}</td></tr>
-            <tr className={classes.style1}><td className={classes.style2}>Load</td></tr>
+            <tr className={classes.style1}><td className={classes.style2}>LOAD</td></tr>
             <tr><td className={classes.mobileValue}>{load}</td></tr>
           </> :
           <>
@@ -63,7 +63,7 @@ const TableContent = ({occupy, load, vacancy, color, isWarning}) => {
               <td className={"d-flex flex-column h-100 border-0 p-0"}>
                 <div className={"d-flex justify-content-center align-items-center"}
                      style={{height: 'calc(50% - 25px)', fontSize: font4, textShadow: '2px 3px 5px black'}}>{vacancy}</div>
-                <div className={classes.style3}>Load</div>
+                <div className={classes.style3}>LOAD</div>
                 <div className={"d-flex justify-content-center align-items-center flex-grow-1"}
                      style={{fontSize: font4, textShadow: '2px 3px 5px black'}}>{load}</div>
               </td>

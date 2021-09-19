@@ -9,7 +9,7 @@ import Canopy from "./canopy";
 import City from "./city";
 import Queue from "./queue";
 import Market from "./market";
-import {logoutIcon} from "../components/image"
+import {logoutIcon, logoIcon} from "../components/image"
 
 const useStyles = makeStyles(theme=> ({
   container: {
@@ -18,10 +18,18 @@ const useStyles = makeStyles(theme=> ({
     }
   },
   logoutContainer: {position: 'absolute', top: 10, right: 0, zIndex: 1},
-  img: {
+  logout_img: {
     width: 200,
     [theme.breakpoints.down(768)]: {
       width: 160,
+    }
+  },
+  logo_img: {
+    width: 200,
+    height: 60, borderRadius: 8,
+    [theme.breakpoints.down(768)]: {
+      width: 160,
+      height: 48,
     }
   },
   logoutContent: {
@@ -37,18 +45,23 @@ const useStyles = makeStyles(theme=> ({
     }
   },
   username: {marginTop: -8},
+  logoContainer: {
+    height: 100,
+    [theme.breakpoints.down(768)]: {height: 80}
+  },
   title: {
     display: 'flex', alignItems: 'center',
-    height: 100, fontSize: 60,
-    [theme.breakpoints.between(768, 992)]: {
-      height: 80, fontSize: 40
-    },
-    [theme.breakpoints.between(550, 768)]: {
-      height: 80, fontSize: 32
-    },
-    [theme.breakpoints.down(550)]: {
-      width: 'calc(100% - 140px)', height: 100, fontSize: 24
-    },
+    fontSize: 60, marginLeft: 16,
+    [theme.breakpoints.down(1200)]: {display: 'none'},
+    // [theme.breakpoints.between(768, 992)]: {
+    //   height: 80, fontSize: 40
+    // },
+    // [theme.breakpoints.between(550, 768)]: {
+    //   height: 80, fontSize: 32
+    // },
+    // [theme.breakpoints.down(550)]: {
+    //   width: 'calc(100% - 140px)', height: 100, fontSize: 24
+    // },
   }
 }))
 
@@ -93,7 +106,7 @@ const Main = () => {
   return (
     <div className={`container position-relative ${classes.container}`}>
       <div className={classes.logoutContainer}>
-        <img className={classes.img} src={logoutIcon} alt={'logout img'} />
+        <img className={classes.logout_img} src={logoutIcon} alt={'logout img'} />
         <div className={classes.logoutContent} onClick={() => {
           localStorage.removeItem('visitor_counting_app_user')
           history.push('/auth/login')
@@ -103,7 +116,8 @@ const Main = () => {
         </div>
       </div>
       <div className={"row"}>
-        <div className={"col-12"}>
+        <div className={`col-12 d-flex align-items-center ${classes.logoContainer}`}>
+          <img className={classes.logo_img} src={logoIcon} alt={'logo img'} />
           <div className={classes.title}>Visitors Counting System</div>
         </div>
         <div className={"col-12"}>
