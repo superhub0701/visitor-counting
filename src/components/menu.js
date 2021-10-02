@@ -22,11 +22,17 @@ const MyLink = styled(withTheme(({color, ...other}) => <div {...other} />))(prop
 const Title = styled(withTheme(({...other}) => <span {...other} />))(props => ({
   display: 'block',
   textShadow: '2px 3px 5px black',
+  [props.theme.breakpoints.between(992, 1200)]: {marginLeft: 0},
   [props.theme.breakpoints.down(992)]: {
     display: 'none',
     textShadow: 'none'
   },
   marginLeft: 8,
+}))
+
+const SettingTitle = styled(withTheme(({...other}) => <span {...other} />))(props => ({
+  display: 'block',
+  textShadow: '2px 3px 5px black',
 }))
 
 const fields = [
@@ -43,6 +49,7 @@ const Menu = () => {
   const history = useHistory()
   const theme = useTheme()
   const matches = useMediaQuery(theme.breakpoints.between(992, 1200));
+  const path = window.location.pathname
 
   const onClick = (i) => {
     history.push(`/main/${fields[i].to}`)
@@ -50,24 +57,30 @@ const Menu = () => {
 
   return (
     <div className={"d-flex"} style={{height: 40}}>
-      {fields.map((field, i) => {
-        let to = field.to;
-        return (
-          <MyLink color={state.pageBgClr[i] ? state.colors[i] : '#c3c2bf'} key={i}
-                  onClick={() => onClick(i)}>
-            {matches ? null :
-              <>
-                {to === 'dashboard' ? <DashboardIcon fill={'#fff'} width={24} height={18}/> : null}
-                {to === 'galleria' ? <GalleryIcon fill={'#fff'} width={18} height={18}/> : null}
-                {to === 'canopy' ? <WalkIcon fill={'#fff'} width={18} height={18}/> : null}
-                {to === 'city' ? <ConeIcon fill={'#fff'} width={18} height={18}/> : null}
-                {to === 'queue' ? <QueueIcon fill={'#fff'} width={18} height={18}/> : null}
-                {to === 'market' ? <MarketIcon fill={'#fff'} width={18} height={18}/> : null}
-              </>}
-            <Title>{field.title}</Title>
-          </MyLink>
-        )
-      })}
+      {path === '/main/setting' ?
+        <MyLink color={'#646464'} onClick={() => {}}>
+          <SettingTitle>Load & Alert</SettingTitle>
+        </MyLink> :
+        fields.map((field, i) => {
+          let to = field.to;
+          return (
+            <MyLink color={state.pageBgClr[i] ? state.colors[i] : '#c3c2bf'} key={i}
+                    onClick={() => onClick(i)}>
+              {matches ? null :
+                <>
+                  {to === 'dashboard' ? <DashboardIcon fill={'#fff'} width={24} height={18}/> : null}
+                  {to === 'galleria' ? <GalleryIcon fill={'#fff'} width={18} height={18}/> : null}
+                  {to === 'canopy' ? <WalkIcon fill={'#fff'} width={18} height={18}/> : null}
+                  {to === 'city' ? <ConeIcon fill={'#fff'} width={18} height={18}/> : null}
+                  {to === 'queue' ? <QueueIcon fill={'#fff'} width={18} height={18}/> : null}
+                  {to === 'market' ? <MarketIcon fill={'#fff'} width={18} height={18}/> : null}
+                </>}
+              <Title>{field.title}</Title>
+            </MyLink>
+          )
+        })
+      }
+
     </div>
   )
 }

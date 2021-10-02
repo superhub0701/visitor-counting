@@ -2,6 +2,8 @@ import React, {useState, useEffect} from "react";
 import {Switch, Route, Redirect} from "react-router";
 import {useHistory} from "react-router-dom";
 import {makeStyles} from "@material-ui/core/styles";
+import ArrowRight from "@material-ui/icons/ArrowRight";
+import ArrowDropDown from "@material-ui/icons/ArrowDropDown";
 import Menu from "../components/menu"
 import Dashboard from "./main";
 import Galleria from "./galleria";
@@ -9,15 +11,21 @@ import Canopy from "./canopy";
 import City from "./city";
 import Queue from "./queue";
 import Market from "./market";
+import Setting from "./setting";
 import {logoutIcon, logoIcon} from "../components/image"
 
-const useStyles = makeStyles(theme=> ({
+const useStyles = makeStyles(theme => ({
   container: {
     [theme.breakpoints.down(768)]: {
       maxWidth: '100%',
     }
   },
   logoutContainer: {position: 'absolute', top: 10, right: 0, zIndex: 1},
+  arrow: {position: 'absolute', top: 30, right: 0, zIndex: 1, fontSize: 40},
+  setting: {
+    position: 'absolute', top: 70, right: 25, width: 100, zIndex: 1, fontSize: 20, textAlign: 'center', backgroundColor: '#2d2d2d', cursor: 'pointer',
+    [theme.breakpoints.down(768)]: {top: 60, right: 20, width: 80}
+  },
   logout_img: {
     width: 200,
     [theme.breakpoints.down(768)]: {
@@ -26,14 +34,22 @@ const useStyles = makeStyles(theme=> ({
   },
   logo_img: {
     width: 200,
-    height: 60, borderRadius: 8,
+    height: 60, borderRadius: 8, cursor: 'pointer',
     [theme.breakpoints.down(768)]: {
       width: 160,
       height: 48,
     }
   },
   logoutContent: {
-    position: 'absolute', right: 25, top: 12, width: 100, textAlign: 'center', wordBreak: 'break-all', display: 'flex', flexDirection: 'column', cursor: 'pointer',
+    position: 'absolute',
+    right: 25,
+    top: 12,
+    width: 100,
+    textAlign: 'center',
+    wordBreak: 'break-all',
+    display: 'flex',
+    flexDirection: 'column',
+    cursor: 'pointer',
     [theme.breakpoints.down(768)]: {
       top: 10, right: 10
     }
@@ -65,10 +81,17 @@ const useStyles = makeStyles(theme=> ({
   }
 }))
 
+const RedirectComponent = () => {
+  const history = useHistory()
+  history.push('/main/dashboard')
+  return (<></>)
+}
+
 const Main = () => {
   const User = JSON.parse(localStorage.getItem('visitor_counting_app_user'))
   const classes = useStyles()
   const history = useHistory()
+  const [isArrowRight, setIsArrowRight] = useState(true)
   const weekday = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
   const month = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
   const addZero = (i) => {
@@ -80,10 +103,14 @@ const Main = () => {
   const nth = (d) => {
     if (d > 3 && d < 21) return 'th';
     switch (d % 10) {
-      case 1:  return "st";
-      case 2:  return "nd";
-      case 3:  return "rd";
-      default: return "th";
+      case 1:
+        return "st";
+      case 2:
+        return "nd";
+      case 3:
+        return "rd";
+      default:
+        return "th";
     }
   }
   const getFormatDate = (date) => {
@@ -106,18 +133,32 @@ const Main = () => {
   return (
     <div className={`container position-relative ${classes.container}`}>
       <div className={classes.logoutContainer}>
-        <img className={classes.logout_img} src={logoutIcon} alt={'logout img'} />
+        <img className={classes.logout_img} src={logoutIcon} alt={'logout img'}/>
         <div className={classes.logoutContent} onClick={() => {
           localStorage.removeItem('visitor_counting_app_user')
           history.push('/auth/login')
         }}>
           <span className={classes.logout}>LOGOUT</span>
-          <span className={classes.username}>{User.name}</span>
+          <span className={classes.username}>{User.name.toUpperCase()}</span>
         </div>
       </div>
+      {User.role === 'Admin' && isArrowRight ?
+        <ArrowRight className={classes.arrow} onClick={() => setIsArrowRight(false)}/> : null}
+      {User.role === 'Admin' && !isArrowRight ?
+        <>
+          <ArrowDropDown className={classes.arrow} onClick={() => setIsArrowRight(true)}/>
+          <div className={classes.setting}>
+            <div style={{backgroundColor: '#fff', height: 1}}></div>
+            <div onClick={()=> {
+              setIsArrowRight(true)
+              history.push('/main/setting')
+            }}>Setting</div>
+          </div>
+        </> : null}
       <div className={"row"}>
         <div className={`col-12 d-flex align-items-center ${classes.logoContainer}`}>
-          <img className={classes.logo_img} src={logoIcon} alt={'logo img'} />
+          <img className={classes.logo_img} src={logoIcon} alt={'logo img'}
+               onClick={() => history.push('/main/dashboard')}/>
           <div className={classes.title}>Visitors Counting System</div>
         </div>
         <div className={"col-12"}>
@@ -131,12 +172,16 @@ const Main = () => {
             <Route path={`/main/city`}><City/></Route>
             <Route path={`/main/queue`}><Queue/></Route>
             <Route path={`/main/market`}><Market/></Route>
+            <Route path={`/main/setting`}>
+              {User && User.role === 'Admin' ? <Setting/> : <RedirectComponent/>}
+            </Route>
             <Route path="/main">
               <Redirect to="/main/dashboard"/>
             </Route>
           </Switch>
         </div>
-        <div className={"col-12 d-none d-sm-flex justify-content-end text-break"} style={{fontSize: 32}}>
+        <div className={"col-12 d-none d-sm-flex justify-content-end text-break"}
+             style={{fontSize: 32, textShadow: '2px 3px 5px black'}}>
           {currentTime}
         </div>
       </div>

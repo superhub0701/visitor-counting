@@ -4,6 +4,7 @@ import axios from 'axios';
 export const baseUrl = '';
 
 export const auth = (data) => axios.post(`${baseUrl}/visitor-api.php`, data)
+export const setting = (data) => axios.post(`${baseUrl}/visitor-api.php`, data)
 
 export const getGalleria = () => axios.get(`${baseUrl}/visitor.php?type=galleria`)
 export const getDashboard = () => axios.get(`${baseUrl}/visitor.php?type=dashboard`)
