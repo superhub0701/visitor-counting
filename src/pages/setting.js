@@ -87,13 +87,22 @@ const Setting = () => {
       .then(res => {
         if ((res.data.type) === 'success') {
           let {canopy, city, queue, sky, galleria} = res.data.data
+          let _galleria = galleria.split('/')
+          let _canopy = canopy.split('/')
+          let _city = city.split('/')
+          let _queue = queue.split('/')
+          let _sky = sky.split('/')
           setPlaces([
-            {name: 'Galleria:', load: galleria.split('/')[0], alert: galleria.split('/')[1]},
-            {name: 'Canopy Walk:', load: canopy.split('/')[0], alert: canopy.split('/')[1]},
-            {name: 'City Cone:', load: city.split('/')[0], alert: city.split('/')[1]},
-            {name: 'Queue:', load: queue.split('/')[0], alert: queue.split('/')[1]},
-            {name: 'Sky Market:', load: sky.split('/')[0], alert: sky.split('/')[1]},
+            {name: 'Galleria:', load: _galleria[0], alert: _galleria[1]},
+            {name: 'Canopy Walk:', load: _canopy[0], alert: _canopy[1]},
+            {name: 'City Cone:', load: _city[0], alert: _city[1]},
+            {name: 'Queue:', load: _queue[0], alert: _queue[1]},
+            {name: 'Sky Market:', load: _sky[0], alert: _sky[1]},
           ])
+          setMain({
+            load: _galleria[0] * 1 + _canopy[0] * 1 + _city[0] * 1 + _queue[0] * 1 + _sky[0] * 1,
+            alert: _galleria[1] * 1 + _canopy[1] * 1 + _city[1] * 1 + _queue[1] * 1 + _sky[1] * 1,
+          })
         } else {
           console.log('error: ', res.data.data)
         }
