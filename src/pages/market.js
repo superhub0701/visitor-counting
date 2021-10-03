@@ -1,23 +1,19 @@
 import React, {useEffect, useState, useContext} from "react";
-// import CircularProgress from '@material-ui/core/CircularProgress';
 import TableContent from "../components/tableContent"
-// import materialStyle from "../styles/material"
 import {getMarket} from "../api"
 import {Context} from '../app';
-import {MarketLoad} from "../global";
 
 const Market = () => {
   const {state, dispatch} = useContext(Context)
-  // const classes = materialStyle()
+  const [_alert, setAlert] = useState(0)
   const [occupy, setOccupy] = useState(0)
   const [load, setLoad] = useState(0)
   const [vacancy, setVacancy] = useState(0)
-  // const [isLoading, setIsLoading] = useState(false)
 
   useEffect(() => {
     dispatch({type: "change_page", data: 5})
     getData()
-    const intervalFunc = setInterval(() => getData(), 3000)
+    const intervalFunc = setInterval(() => getData(), 30000)
 
     return () => {
       clearInterval(intervalFunc)
@@ -25,15 +21,15 @@ const Market = () => {
   }, [])
 
   const getData = () => {
-    // setIsLoading(true)
     getMarket()
       .then(res => {
-        // setIsLoading(false)
-        setOccupy(res.data)
-        setLoad(MarketLoad)
-        setVacancy(MarketLoad - res.data)
+        setOccupy(res.data.data)
+        let [market_load, market_alert] = res.data.setting.sky.split('/')
+        setAlert(market_alert * 1)
+        setLoad(market_load * 1)
+        let _vacancy = (market_load * 1 >= res.data.data * 1)? market_load * 1 - res.data.data * 1 : 0;
+        setVacancy(_vacancy)
       }).catch(err => {
-      // setIsLoading(false)
       console.log('error: ', err.response)
       alert('Error found')
     })
@@ -41,10 +37,7 @@ const Market = () => {
 
   return (
     <>
-      <TableContent occupy={occupy} load={load} vacancy={vacancy} color={state.colors[5]} isWarning={occupy>120}/>
-      {/*{isLoading ? <div className={classes.loading}>*/}
-      {/*  <CircularProgress size={100} color="secondary"/>*/}
-      {/*</div> : null}*/}
+      <TableContent occupy={occupy} load={load} vacancy={vacancy} color={state.colors[5]} isWarning={occupy>_alert}/>
     </>
   )
 };

@@ -30,5 +30,5 @@ table, th, td {
 
 @font-face {
     font-family: 'Myriad';
-    src: local('Myriad'), url(./assets/fonts/MYRIADPRO-BOLD.OTF) format('opentype');
+    src: local('Myriad'), url(/visitor/assets/fonts/MYRIADPRO-BOLD.OTF) format('opentype');
 }

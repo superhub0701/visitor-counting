@@ -1,24 +1,19 @@
 import React, {useEffect, useState, useContext} from "react";
-// import {makeStyles} from '@material-ui/core/styles';
-// import CircularProgress from '@material-ui/core/CircularProgress';
 import TableContent from "../components/tableContent"
-// import materialStyle from "../styles/material"
 import {getGalleria} from "../api"
 import {Context} from '../app';
-import {GalleriaLoad} from "../global";
 
 const Galleria = () => {
   const {state, dispatch} = useContext(Context)
-  // const classes = materialStyle()
+  const [_alert, setAlert] = useState(0)
   const [occupy, setOccupy] = useState(0)
   const [load, setLoad] = useState(0)
   const [vacancy, setVacancy] = useState(0)
-  // const [isLoading, setIsLoading] = useState(false)
 
   useEffect(() => {
     dispatch({type: "change_page", data: 1})
     getData()
-    const intervalFunc = setInterval(() => getData(), 3000)
+    const intervalFunc = setInterval(() => getData(), 30000)
 
     return () => {
       clearInterval(intervalFunc)
@@ -26,15 +21,15 @@ const Galleria = () => {
   }, [])
 
   const getData = () => {
-    // setIsLoading(true)
     getGalleria()
       .then(res => {
-        // setIsLoading(false)
-        setOccupy(res.data)
-        setLoad(GalleriaLoad)
-        setVacancy(GalleriaLoad - res.data)
+        setOccupy(res.data.data)
+        let [galleria_load, galleria_alert] = res.data.setting.galleria.split('/')
+        setAlert(galleria_alert * 1)
+        setLoad(galleria_load * 1)
+        let _vacancy = (galleria_load * 1 >= res.data.data * 1)? galleria_load * 1 - res.data.data * 1 : 0;
+        setVacancy(_vacancy)
       }).catch(err => {
-      // setIsLoading(false)
       console.log('error: ', err.response)
       alert('Error found')
     })
@@ -42,10 +37,7 @@ const Galleria = () => {
 
   return (
     <>
-      <TableContent occupy={occupy} load={load} vacancy={vacancy} color={state.colors[1]} isWarning={occupy>86}/>
-      {/*{isLoading ? <div className={classes.loading}>*/}
-      {/*  <CircularProgress size={100} color="secondary"/>*/}
-      {/*</div> : null}*/}
+      <TableContent occupy={occupy} load={load} vacancy={vacancy} color={state.colors[1]} isWarning={occupy>_alert}/>
     </>
   )
 };

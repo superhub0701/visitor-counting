@@ -1,5 +1,5 @@
 import React, {createContext, useReducer} from "react";
-import {BrowserRouter as Router, Switch, Route, Redirect} from "react-router-dom";
+import {HashRouter as Router, Switch, Route, Redirect} from "react-router-dom";
 import {makeStyles} from "@material-ui/core/styles";
 import "./app.css";
 import Auth from "./pages/auth";

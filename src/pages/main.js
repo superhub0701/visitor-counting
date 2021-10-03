@@ -5,7 +5,7 @@ import useMediaQuery from "@material-ui/core/useMediaQuery";
 // import materialStyle from "../styles/material";
 import {Context} from "../app";
 import {getDashboard} from "../api";
-import {font1, font2, font3, font4, font5, CityLoad, CanopyLoad, MarketLoad, QueueLoad, TotalLoad, GalleriaLoad} from "../global";
+import {font1, font2, font3, font4, font5} from "../global";
 
 const useStyles = makeStyles(theme => ({
   container: props => ({
@@ -86,7 +86,7 @@ const Dashboard = () => {
   useEffect(() => {
     dispatch({type: "change_page", data: 0})
     getData()
-    const intervalFunc = setInterval(() => getData(), 3000)
+    const intervalFunc = setInterval(() => getData(), 30000)
 
     return () => {
       clearInterval(intervalFunc)
@@ -98,17 +98,24 @@ const Dashboard = () => {
     getDashboard()
       .then(res => {
         // setIsLoading(false)
-        let {galleria, canopy, city, queue, market} = res.data
+        let {galleria, canopy, city, queue, market, setting} = res.data
+        let [gal_l, gal_a] = setting.galleria.split('/')
+        let [cnp_l, cnp_a] = setting.canopy.split('/')
+        let [cty_l, cty_a] = setting.city.split('/')
+        let [que_l, que_a] = setting.queue.split('/')
+        let [mrk_l, mrk_a] = setting.sky.split('/')
+        let TotalLoad = gal_l * 1 + cnp_l * 1 + cty_l * 1 + que_l * 1 + mrk_l * 1
         setLoad(TotalLoad)
-        let total = galleria + canopy + city + queue + market;
+        let total = galleria * 1 + canopy * 1 + city * 1 + queue * 1 + market * 1;
         setOccupy(total)
-        setVacancy(TotalLoad-total)
+        let _vacancy = (TotalLoad >= total)? (TotalLoad - total) : 0;
+        setVacancy(_vacancy)
         setDetails([
-          {occupy: galleria, load: GalleriaLoad},
-          {occupy: canopy, load: CanopyLoad},
-          {occupy: city, load: CityLoad},
-          {occupy: queue, load: QueueLoad},
-          {occupy: market, load: MarketLoad},
+          {occupy: galleria, load: gal_l * 1, alert: gal_a * 1},
+          {occupy: canopy, load: cnp_l * 1, alert: cnp_a * 1},
+          {occupy: city, load: cty_l * 1, alert: cty_a * 1},
+          {occupy: queue, load: que_l * 1, alert: que_a * 1},
+          {occupy: market, load: mrk_l * 1, alert: mrk_a * 1},
         ])
       }).catch(err => {
       // setIsLoading(false)
@@ -177,12 +184,7 @@ const Dashboard = () => {
           </div>
           <div className={'d-flex flex-grow-1'}>
             {detailStyles.map((data, i) => {
-              let isWarning = false;
-              if(data.name === 'GALLERIA' && details[i]?.occupy > 86) isWarning = true;
-              else if(data.name === 'CANOPY WALK' && details[i]?.occupy > 60) isWarning = true;
-              else if(data.name === 'CITY CONE' && details[i]?.occupy > 30) isWarning = true;
-              else if(data.name === 'QUEUE' && details[i]?.occupy > 50) isWarning = true;
-              else if(data.name === 'SKY MARKET' && details[i]?.occupy > 120) isWarning = true;
+              let isWarning = details[i]? details[i].occupy > details[i].alert : false;
 
               return (
                 <div className={'d-flex flex-column'} style={{width: `${100 / detailStyles.length}%`}} key={i}>

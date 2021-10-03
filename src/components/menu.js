@@ -49,7 +49,7 @@ const Menu = () => {
   const history = useHistory()
   const theme = useTheme()
   const matches = useMediaQuery(theme.breakpoints.between(992, 1200));
-  const path = window.location.pathname
+  const path = window.location.href.split('#')[1];
 
   const onClick = (i) => {
     history.push(`/main/${fields[i].to}`)
