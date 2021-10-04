@@ -26,6 +26,10 @@ const useStyles = makeStyles(theme => ({
     width: 200, textAlign: 'right',
     [theme.breakpoints.down(768)]: {width: 140}
   },
+  reset: {
+    width: 200, textAlign: 'right', fontSize: 28,
+    [theme.breakpoints.down(768)]: {width: 140, fontSize: 18}
+  },
   input: {
     width: 100, height: 40, margin: '0 60px',
     [theme.breakpoints.down(768)]: {width: 80, margin: '0 5px'}
@@ -169,7 +173,7 @@ const Setting = () => {
             </Fragment>)}
           <div className={classes.seperator}></div>
           <div className={'d-flex align-items-center mt-2'}>
-            <div className={classes.name}>Reset Time</div>
+            <div className={classes.reset}>Reset Counting:</div>
             <div className={classes.input} style={{height: matches ? 24 : 40, textAlign: matches ? 'center' : 'start'}}>
               <input className={classes.checkbox} type={'checkbox'} value={isReset}
                      onChange={() => setIsReset(!isReset)}/>
