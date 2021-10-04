@@ -37,11 +37,11 @@ const SettingTitle = styled(withTheme(({...other}) => <span {...other} />))(prop
 
 const fields = [
   {to: 'dashboard', title: 'Main', color: '#b3d5eb'},
-  {to: 'galleria', title: 'Galleria', color: '#b4e1ca'},
-  {to: 'canopy', title: 'Canopy Walk', color: '#f3b9cc'},
-  {to: 'city', title: 'City Cone', color: '#f5cfbd'},
   {to: 'queue', title: 'Queue', color: '#f5cfbd'},
+  {to: 'city', title: 'City Cone', color: '#f5cfbd'},
+  {to: 'canopy', title: 'Canopy Walk', color: '#f3b9cc'},
   {to: 'market', title: 'Sky Market', color: '#dbbeda'},
+  {to: 'galleria', title: 'Galleria', color: '#b4e1ca'},
 ]
 
 const Menu = () => {
@@ -69,11 +69,11 @@ const Menu = () => {
               {matches ? null :
                 <>
                   {to === 'dashboard' ? <DashboardIcon fill={'#fff'} width={24} height={18}/> : null}
-                  {to === 'galleria' ? <GalleryIcon fill={'#fff'} width={18} height={18}/> : null}
-                  {to === 'canopy' ? <WalkIcon fill={'#fff'} width={18} height={18}/> : null}
-                  {to === 'city' ? <ConeIcon fill={'#fff'} width={18} height={18}/> : null}
                   {to === 'queue' ? <QueueIcon fill={'#fff'} width={18} height={18}/> : null}
+                  {to === 'city' ? <ConeIcon fill={'#fff'} width={18} height={18}/> : null}
+                  {to === 'canopy' ? <WalkIcon fill={'#fff'} width={18} height={18}/> : null}
                   {to === 'market' ? <MarketIcon fill={'#fff'} width={18} height={18}/> : null}
+                  {to === 'galleria' ? <GalleryIcon fill={'#fff'} width={18} height={18}/> : null}
                 </>}
               <Title>{field.title}</Title>
             </MyLink>

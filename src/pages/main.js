@@ -125,11 +125,11 @@ const Dashboard = () => {
   }
 
   const detailStyles = [
-    {title: '#237350', top: '#707070', bottom: '#00a651', name: 'GALLERIA'},
-    {title: '#96292c', top: '#707070', bottom: '#ed145b', name: 'CANOPY WALK'},
-    {title: '#90563c', top: '#707070', bottom: '#f26522', name: 'CITY CONE'},
     {title: '#90563c', top: '#707070', bottom: '#ddbd0b', name: 'QUEUE'},
-      {title: '#6a2956', top: '#707070', bottom: '#92278f', name: 'SKY MARKET'},
+    {title: '#90563c', top: '#707070', bottom: '#f26522', name: 'CITY CONE'},
+    {title: '#96292c', top: '#707070', bottom: '#ed145b', name: 'CANOPY WALK'},
+    {title: '#6a2956', top: '#707070', bottom: '#92278f', name: 'SKY MARKET'},
+    {title: '#237350', top: '#707070', bottom: '#00a651', name: 'GALLERIA'},
   ]
 
   return (
@@ -164,7 +164,7 @@ const Dashboard = () => {
             </div>
 
             <div className={'w-50 p-4'}>
-              <div className={'w-100'}>
+              <div className={'w-100 h-50'}>
                 <div className={classes.rightSideTitle}>VACANCIES:</div>
                 <div className={'d-flex justify-content-end'}>
                   <div className={classes.rightSideValue}>
@@ -172,7 +172,7 @@ const Dashboard = () => {
                   </div>
                 </div>
               </div>
-              <div className={'w-100'}>
+              <div className={'w-100 h-50'}>
                 <div className={classes.rightSideTitle}>LOAD:</div>
                 <div className={'d-flex justify-content-end'}>
                   <div className={classes.rightSideValue}>

@@ -11,7 +11,7 @@ const Market = () => {
   const [vacancy, setVacancy] = useState(0)
 
   useEffect(() => {
-    dispatch({type: "change_page", data: 5})
+    dispatch({type: "change_page", data: 4})
     getData()
     const intervalFunc = setInterval(() => getData(), 30000)
 
@@ -37,7 +37,7 @@ const Market = () => {
 
   return (
     <>
-      <TableContent occupy={occupy} load={load} vacancy={vacancy} color={state.colors[5]} isWarning={occupy>_alert}/>
+      <TableContent occupy={occupy} load={load} vacancy={vacancy} color={state.colors[4]} isWarning={occupy>_alert}/>
     </>
   )
 };

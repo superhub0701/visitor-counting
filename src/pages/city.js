@@ -11,7 +11,7 @@ const City = () => {
   const [vacancy, setVacancy] = useState(0)
 
   useEffect(() => {
-    dispatch({type: "change_page", data: 3})
+    dispatch({type: "change_page", data: 2})
     getData()
     const intervalFunc = setInterval(() => getData(), 30000)
 
@@ -37,7 +37,7 @@ const City = () => {
 
   return (
     <>
-      <TableContent occupy={occupy} load={load} vacancy={vacancy} color={state.colors[3]} isWarning={occupy>_alert}/>
+      <TableContent occupy={occupy} load={load} vacancy={vacancy} color={state.colors[2]} isWarning={occupy>_alert}/>
     </>
   )
 };

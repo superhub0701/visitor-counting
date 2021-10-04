@@ -1,6 +1,6 @@
 const initialState = {
   pageBgClr: [true, false, false, false, false, false],
-  colors: ['#0072bc', '#0d9a56', '#e3165f', '#e75f2c', '#ddbd0b', '#862683', '#646464'],
+  colors: ['#0072bc', '#ddbd0b', '#e75f2c', '#e3165f', '#862683', '#0d9a56', '#646464'],
   user: {}
 }
 
